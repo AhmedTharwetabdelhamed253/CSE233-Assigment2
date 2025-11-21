@@ -1,1 +1,131 @@
-ssssss
+1. file1.c
+
+This file defines a simple function and demonstrates calling it from main().
+
+#include <stdio.h>
+
+void hello() {
+    printf("Hello from file1!\n");
+}
+
+void hello();
+
+int main() {
+    hello();
+    return 0;
+}
+
+Explanation
+
+The hello() function prints a message to the console.
+
+There is a redundant forward declaration void hello(); because the function is already defined above.
+
+The main() function simply calls hello() to display the message.
+
+This file demonstrates how functions can be defined in one source file and used elsewhere.
+
+2. fork_process.c
+
+This file demonstrates process creation using the fork() system call in Linux.
+
+#include <stdio.h>
+#include <unistd.h>
+
+int main() {
+    pid_t pid = fork();
+
+    if (pid == 0) {
+        printf("This is the child process. PID: %d\n", getpid());
+    } else if (pid > 0) {
+        printf("This is the parent process. PID: %d\n", getpid());
+    } else {
+        printf("Fork failed!\n");
+    }
+
+    return 0;
+}
+
+Explanation
+
+fork() creates a new process by duplicating the current one.
+
+After the call:
+
+The child process receives a return value of 0.
+
+The parent process receives the child's PID (> 0).
+
+A negative return value means the creation failed.
+
+getpid() prints the process ID to show the difference between parent and child.
+
+This example helps visualize how process forking works in Unix-like operating systems.
+
+3. file2.c
+
+A simple standalone program:
+
+#include <stdio.h>
+
+int main() {
+    printf("This is a simple program.\n");
+    return 0;
+}
+
+Explanation
+
+Prints a basic message.
+
+No additional logic.
+
+Primarily useful for compilation and linking examples.
+
+📌 Makefile Explanation
+linker_out: file1.o file2.o
+	gcc file1.o file2.o -o linker_out
+
+file1.o: file1.c
+	gcc -c file1.c
+
+file2.o: file2.c
+	gcc -c file2.c
+
+loadprocess: loader_program
+
+louder: loader_program.c
+	gcc loader_program.c -o loader_program
+
+ldd:
+	ldd loader_program
+
+fork_process:
+	gcc fork_process.c -o fork_process
+	./fork_process
+
+Explanation
+Object File Compilation
+
+file1.o and file2.o are compiled using gcc -c to generate object files.
+
+This step compiles the code without linking.
+
+Linking
+
+The rule linker_out: links the two object files into a single executable named linker_out.
+
+Demonstrates manual compilation and linking steps.
+
+Loader Program
+
+The target louder: compiles loader_program.c into an executable named loader_program.
+
+Shared Library Inspection
+
+The target ldd: runs the ldd command to list all shared libraries required by loader_program.
+
+Fork Example
+
+Compiles fork_process.c and runs the executable.
+
+This target demonstrates process forking behavior during execution
